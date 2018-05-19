@@ -1,13 +1,35 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue May 15 16:15:25 2018
+
+@author: Wang Shuoyao
+"""
+
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import scipy.io as sio
 import time
-from collections import Counter
-from sklearn.metrics import label_ranking_average_precision_score
-from sklearn.metrics import coverage_error, label_ranking_loss, hamming_loss, accuracy_score
 
-def DNN_train(net,X_train,Y_train,X_valid,Y_valid,model_location,export_weight_biase_sw=0,regularizer=0.001,training_epochs=100, batch_size=100, LR= 0.001,in_keep=0.95,hi_keep=0.95,LRdecay=0):
+
+def cal_acc(a,b):
+    n=a.shape[0]
+    m=a.shape[1]
+    tterr=0
+    r_err=0
+    for i in range(n):
+        cuerr=0
+        for j in range(m):
+            if a[i][j]!= b[i][j]:
+               tterr+=1
+               cuerr+=1
+        if cuerr>0:
+            r_err+=1
+            
+    return 1-r_err/n, 1-tterr/(n*m)
+
+
+def CNN_train(net,X_train,Y_train,X_valid,Y_valid,model_location,export_weight_biase_sw=0,regularizer=0.001,training_epochs=100, batch_size=100, LR= 0.001,in_keep=0.95,hi_keep=0.95,LRdecay=0):
 
     n_input = X_train.shape[1]                          # input size
     n_output = Y_train.shape[1]                         # output size
@@ -24,12 +46,13 @@ def DNN_train(net,X_train,Y_train,X_valid,Y_valid,model_location,export_weight_b
     total_batch = int((X_train.shape[0]+X_valid.shape[0]) / batch_size)
     input_keep_prob = tf.placeholder(tf.float32)
     hidden_keep_prob = tf.placeholder(tf.float32)
-
-    weights=[tf.Variable(tf.truncated_normal([n_input, net[0]]) / np.sqrt(n_input))] 
+    
+    convsize=3;
+    weights=[tf.Variable(tf.truncated_normal([convsize, 1,net[0]]) / np.sqrt(convsize))] 
     #net is input parameter of the size of the nerual network
     for i in range(len(net)-1):
-        weights.append(tf.Variable(tf.truncated_normal([net[i], net[i+1]]) / np.sqrt(net[i])))
-    weights.append(tf.Variable(tf.truncated_normal([net[len(net)-1], n_output]) / net[i]))
+        weights.append(tf.Variable(tf.truncated_normal([convsize,net[i], net[i+1]]) / np.sqrt(convsize)))
+    weights.append(tf.Variable(tf.truncated_normal([net[len(net)-1]*n_output, n_output]) / net[i]))
 
     biases=[tf.Variable(tf.ones([net[0]]) * 0.05)]
     for i in range(len(net)-1):
@@ -37,17 +60,34 @@ def DNN_train(net,X_train,Y_train,X_valid,Y_valid,model_location,export_weight_b
     biases.append(tf.Variable(tf.ones([n_output]) * 0.05))
 
     x1 = tf.nn.dropout(x, input_keep_prob)
+    
+    #print(x1)
+    
+   # print(x2)
+    x1=tf.expand_dims(x1,2)
     for i in range(len(net)):
-            x1 = tf.add(tf.matmul(x1, weights[i]), biases[i])   # x = wx+b
-            x1 = tf.nn.relu(x1)                                 # x = max(0, x)
+            #fil=tf.constant(1/3,dtype=tf.float32,shape=[3,1,len(net)])
+            #x1=tf.expand_dims(x1,2)    
+            #x1 = 
+            #print(x2)
+            #
+            #print(x1)
+            #print(x1,weights[i])
+            x1= tf.nn.conv1d(x1,weights[i],stride=1,padding="SAME")
+            #print(x1)
+            #x1 = tf.add(, biases[i])   # x = wx+b
+            x1 = tf.nn.relu(x1+biases[i])                                 # x = max(0, x)
             x1 = tf.nn.dropout(x1, hidden_keep_prob)            # dropout layer
-    pred = tf.matmul(x1, weights[len(net)]) + biases[len(net)]
-
+    #print(x1, weights[len(net)])
+    #x1=tf.squeeze(x1,2)
+    x_image=tf.reshape(x1,[-1,n_output*net[len(net)-1]])
+    pred = tf.matmul(x_image, weights[len(net)]) + biases[len(net)]
+    #pred = tf.squeeze(pred,2)
 # train the DNN
     if regularizer==0:
-        cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels =y, logits = pred))+0.5*tf.abs((tf.nn.zero_fraction(y)-tf.nn.zero_fraction(pred)))
+        cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels =y, logits = pred))
     else:
-        cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels =y, logits = pred))+0.5*tf.abs((tf.nn.zero_fraction(y)-tf.nn.zero_fraction(pred)))
+        cost = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels =y, logits = pred))
         for i in range(len(weights)):
             cost=cost+tf.contrib.layers.l2_regularizer(regularizer)(weights[i])
 
@@ -107,7 +147,7 @@ def DNN_train(net,X_train,Y_train,X_valid,Y_valid,model_location,export_weight_b
     return 0
 
 # Functions for deep neural network testing
-def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=0):
+def CNN_test(net,X_test, Y_test,  model_location, save_name, binary=1):
     tf.reset_default_graph()
 
 # setup and initialize the DNN network structure
@@ -121,10 +161,14 @@ def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=0):
     input_keep_prob = tf.placeholder(tf.float32)
     hidden_keep_prob = tf.placeholder(tf.float32)
 
-    weights=[tf.Variable(tf.truncated_normal([n_input, net[0]]) / np.sqrt(n_input))]
+    convsize=3;
+    weights=[tf.Variable(tf.truncated_normal([convsize, 1,net[0]]) / np.sqrt(convsize))] 
+    #net is input parameter of the size of the nerual network
     for i in range(len(net)-1):
-        weights.append(tf.Variable(tf.truncated_normal([net[i], net[i+1]]) / np.sqrt(net[i])))
-    weights.append(tf.Variable(tf.truncated_normal([net[len(net)-1], n_output]) / net[i]))
+        weights.append(tf.Variable(tf.truncated_normal([convsize,net[i], net[i+1]]) / np.sqrt(convsize)))
+    weights.append(tf.Variable(tf.truncated_normal([net[len(net)-1]*n_output, n_output]) / net[i]))
+
+
 
     biases=[tf.Variable(tf.ones([net[0]]) * 0.05)]
     for i in range(len(net)-1):
@@ -132,36 +176,47 @@ def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=0):
     biases.append(tf.Variable(tf.ones([n_output]) * 0.05))
 
     x1 = tf.nn.dropout(x, input_keep_prob)
+    #print(x1)
+    
+   # print(x2)
+    x1=tf.expand_dims(x1,2)
     for i in range(len(net)):
-            x1 = tf.add(tf.matmul(x1, weights[i]), biases[i])   # x = wx+b
-            x1 = tf.nn.relu(x1)                                 # x = max(0, x)
+            #fil=tf.constant(1/3,dtype=tf.float32,shape=[3,1,len(net)])
+            #x1=tf.expand_dims(x1,2)    
+            #x1 = 
+            #print(x2)
+            #
+            #print(x1)
+            #print(x1,weights[i])
+            x1= tf.nn.conv1d(x1,weights[i],stride=1,padding="SAME")
+            #print(x1)
+            #x1 = tf.add(, biases[i])   # x = wx+b
+            x1 = tf.nn.relu(x1+biases[i])                                 # x = max(0, x)
             x1 = tf.nn.dropout(x1, hidden_keep_prob)            # dropout layer
-    pred = tf.matmul(x1, weights[len(net)]) + biases[len(net)]
+    #print(x1, weights[len(net)])
+    #x1=tf.squeeze(x1,2)
+    x_image=tf.reshape(x1,[-1,n_output*net[len(net)-1]])
+    pred = tf.matmul(x_image, weights[len(net)]) + biases[len(net)]
+    #pred = tf.squeeze(pred,2)
 
     prediction = tf.sigmoid(pred)
     predicted_class = tf.greater(prediction, 0.5)
     correct = tf.equal(predicted_class, tf.equal(y,1.0))
     accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 
-   #  accuracy_symbol=0;
-   #  for i in range (n_input):
-   #      prediction1 = tf.sigmoid(pred[i,:])
-   #      predicted_class1 = tf.greater(prediction1, 0.5)
-   #      correct1 = tf.equal(predicted_class1, tf.equal(y[i,:],1.0))
-   #      accuracy1 = tf.reduce_mean(tf.cast(correct1, 'float'))
-   #      printvalue=tf.greater(accuracy1, 0.99)
-   #      # print(printvalue.eval(session=sess))
-   #      if tf.greater(accuracy1, 0.99) is not None:
-   #          accuracy_symbol+=1 
-   #         # print(tf.greater(accuracy1, 0.99))
-    average_acc=[]
-    arrayacc=predicted_class.eval()
-    for i in range(n_input):
-          average_acc.append(accuracy_score(y[i],arrayacc[i]))
-    average_acc_total= np.average(average_acc)
-    average_acc_row=average_acc.count(1)/predictions.shape[1]
-
-    print('Test Row Accuracy:', average_acc_row, '\n Test Total Average Accuracy:',average_acc_total)
+    accuracy_symbol=0;
+    for i in range (n_input):
+        prediction1 = tf.sigmoid(pred[i,:])
+        predicted_class1 = tf.greater(prediction1, 0.5)
+        correct1 = tf.equal(predicted_class1, tf.equal(y[i,:],1.0))
+        accuracy1 = tf.reduce_mean(tf.cast(correct1, 'float'))
+        printvalue=tf.greater(accuracy1, 0.99)
+       # print(printvalue.eval())
+        if tf.greater(accuracy1, 0.99) is not None:
+            accuracy_symbol+=1 
+           # print(tf.greater(accuracy1, 0.99))
+   # accuracy_symbol=accuracy_symbol/X_test.shape[0]
+    print('Test Row Accuracy:', accuracy_symbol)
 
     saver = tf.train.Saver()
     with tf.Session() as sess:
@@ -181,6 +236,19 @@ def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=0):
             y_pred = tf.greater(y_pred, 0.5)
             y_pred = tf.cast(y_pred, tf.int32)
             y_pred = y_pred.eval()
-
-        sio.savemat(save_name, {'input_h': X_test/10000000,'output_mode':Y_test,'output_mode_pred': y_pred})
+            e1,e2=cal_acc(Y_test,y_pred)            
+            print('Accuracy:',e2,'Row Accuracy:',e1,'\n')
+            
+        sio.savemat(save_name, {'output_mode':Y_test,'output_mode_pred': y_pred})
+        outx=X_test
+        outy=Y_test
+        for i in range(Y_test.shape[0]):
+            if np.any(Y_test[i]!=y_pred[i]):
+                for j in range(100):
+                    outx=outx+X_test[i]
+                    outy=outy+Y_test[i]
+        
+                            
+        sio.savemat(save_name+'boost', {'label_t':np.random.shuffle(outy),'X_t': np.random.shuffle(outx)})
+       
     return testtime, y_pred

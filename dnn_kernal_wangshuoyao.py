@@ -105,7 +105,7 @@ def DNN_train(net,X_train,Y_train,X_valid,Y_valid,model_location,export_weight_b
     return 0
 
 # Functions for deep neural network testing
-def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=0):
+def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=1):
     tf.reset_default_graph()
 
 # setup and initialize the DNN network structure
@@ -174,5 +174,5 @@ def DNN_test(net,X_test, Y_test,  model_location, save_name, binary=0):
             y_pred = tf.cast(y_pred, tf.int32)
             y_pred = y_pred.eval()
 
-        sio.savemat(save_name, {'input_h': X_test/10000000,'output_mode':Y_test,'output_mode_pred': y_pred})
+        sio.savemat(save_name, {'output_mode':Y_test,'output_mode_pred': y_pred})
     return testtime, y_pred

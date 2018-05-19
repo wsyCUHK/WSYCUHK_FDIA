@@ -1,21 +1,21 @@
 import scipy.io as sio                     # import scipy.io for .mat file I/
 import numpy as np                         # import numpy
-import dnn_wsy as dnn     # import our function file
+import dnn_kernal_wangshuoyao as dnn     # import our function file
 
 
 KK = 1                     # number of users
-K= 2
+K= 1
 
 # Load data
-measurement = sio.loadmat('./data/train%d' %K)['newStateRe']
-attack = sio.loadmat('./data/train%d' %K)['newlabel']
-measurement1 = sio.loadmat('./data/test%d' %KK)['newStateRe']
-attack1 = sio.loadmat('./data/test%d' %KK)['newlabel']
+measurement = sio.loadmat('./data/3case_embed_train%d' %K)['X_t']
+attack = sio.loadmat('./data/3case_embed_train%d' %K)['label_t']
+measurement1 = sio.loadmat('./data/3case_embed_train%d' %KK)['X_s']
+attack1 = sio.loadmat('./data/3case_embed_train%d' %KK)['label_s']
 
 
 # Save & Load model from this path
-model_location = "./DNNmodel/model_demo.ckpt"
-save_name="./data/Prediction_%d" % K
+model_location = "./DNNmodel/123model_demo.ckpt"
+save_name="./data/123Prediction_%d" % K
 #export the weights and biases or not
 export_weight_biase_sw=1
 
