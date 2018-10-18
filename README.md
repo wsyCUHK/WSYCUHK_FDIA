@@ -4,3 +4,7 @@ Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label
 This is the code and data for the paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
 
 Any question, please feel free to contact us through Github or email.
+
+
+The code used in the paper can be find in /Code/....
+Other files are other methods, such as MLP, for testing usage. If you are interested, you can still try those codes for fun.
