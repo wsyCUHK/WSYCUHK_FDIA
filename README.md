@@ -23,3 +23,11 @@ Step 2: We randomly select 10000 sets of loads to implement FDIA.
 Step 3: For each attack, we randomly select a set of target state variables to compromise. In particular, the number of target state variables is uniformly distributed between 2-5 and the indices of target state variables are uniformly chosen from all the state variables.  
 Step 4: For each set of load and its particular target state variables, we generate stealthy FDIA according to the min-cut algorithm in [Bi & Zhang 2014] ( S. Bi and Y. J. Zhang, “Using covert topological information for defense against malicious attacks on DC state estimation,” IEEE J. on Selected Areas in Comm., vol. 32, no. 7, pp. 1471–1485, July 2014.).  
 Step 5: Due to the dynamic measurement noise, we also append random Gaussian noises to both compromised and uncompromised data.  
+
+
+## Contact Us
+The first author received the B.Eng. degree (with first class Hons.) and the Ph.D degree in information engineering from The Chinese University of Hong Kong, Hong Kong, in 2013 and 2018, respectively.  His research interests include network embedding, optimization theory, queueing analysis, dynamic programming, deep learning  and reinforcement learning algorithm in Smart Grid.
+
+He is currently a Senior Researcher  on data mining for Wechat Pay（微信支付） risk management  with Tencent, Shenzhen, China. For any inquiry for this work or cooperation， please feel free to contact us through github.
+
+## Thank you for reading!!!
