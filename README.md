@@ -1,6 +1,16 @@
-
+## Deep Learning based Locational Detection architecture
+Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach, which is submitted to IEEE Internet of Things Journal.
+## Introduction
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
 
+## Requirements and Installation
+We recommended the following dependencies.
+
+* Python 3.6
+* [Keras](http://keras.io//) 2.0
+* [NumPy](http://www.numpy.org/) (>1.12.1)
+
+## Training Data
 ./data/data118_traintest.mat: There are 4 variables inside our .mat file, i.e., training_x, training_y, testing_x, testing_y.   
         training_x:110000×180  
         training_y:110000×180  
