@@ -3,6 +3,7 @@ Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label
 ## Introduction
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
 
+
 ## Requirements and Installation
 We recommended the following dependencies.
 
@@ -11,14 +12,14 @@ We recommended the following dependencies.
 * [NumPy](http://www.numpy.org/) (>1.12.1)
 
 ## Training Data
-# The training data file contrains 4 matrices：
+### The training data file contrains 4 matrices：
 ./data/data118_traintest.mat: There are 4 variables inside our .mat file, i.e., training_x, training_y, testing_x, testing_y.   
         training_x:110000×180  
         training_y:110000×180  
         testing_x:10000×180  
         testing_y:10000×180  
 
-# The training data is generated as follows:  
+### The training data is generated as follows:  
 Step 1: We first generate 110000 sets of base load data by extending the real-world data through artificially generating the loads on each bus with normal distribution.  
 Step 2: We randomly select 10000 sets of loads to implement FDIA.  
 Step 3: For each attack, we randomly select a set of target state variables to compromise. In particular, the number of target state variables is uniformly distributed between 2-5 and the indices of target state variables are uniformly chosen from all the state variables.  
