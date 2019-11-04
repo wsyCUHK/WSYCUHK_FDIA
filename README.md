@@ -28,8 +28,7 @@ Step 5: Due to the dynamic measurement noise, we also append random Gaussian noi
 
 
 ## About Authors
-Shuoyao Wang, yorksywang@tencent.com :The first author received the B.Eng. degree (with first class Hons.) and the Ph.D degree in information engineering from The Chinese University of Hong Kong, Hong Kong, in 2013 and 2018, respectively.  His research interests include network embedding, optimization theory, queueing analysis, dynamic programming, deep learning  and reinforcement learning algorithm in Smart Grid.
-He is currently a Senior Researcher  on data mining (e.g., NLU, Adversarial Reinforcement Learning, Graph Neural Networks) for Wechat Pay（微信支付） risk management  with Tencent, Shenzhen, China. For any inquiry for this work or cooperation， please feel free to contact us through github.
+Shuoyao Wang, yorksywang@tencent.com :Shuoyao Wang received the B.Eng. degree (with first class Hons.) and the Ph.D degree in information engineering from The Chinese University of Hong Kong, Hong Kong, in 2013 and 2018, respectively. Since 2018, he has been with the Department of Risk Management, CDG, Tencent, Shenzhen, China, where he is currently an Senior Researcher. His research interests include nature language processing, adversarial (reinforcement) learning, graph neural networks, optimization theory, dynamic programming, deep learning and reinforcement learning algorithm in both Smart Grid and WeChatPay Risk Management.
 
 Suzhi Bi, bsz@szu.edu.cn
 
