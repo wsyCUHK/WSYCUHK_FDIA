@@ -2,7 +2,7 @@
 Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach, which is submitted to IEEE Internet of Things Journal.
 ## Introduction
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
-
+![The structure of Deep Learning based Locational Detection architecture.](https://user-images.githubusercontent.com/37823466/68104232-46478880-ff15-11e9-9e39-759c1d568ada.png)
 
 ## Requirements and Installation
 We recommended the following dependencies.
