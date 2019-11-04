@@ -1,3 +1,6 @@
+We provide both the Keras approach and the Tensorflow approaches.
+
+In particular,
 CalculateF1.py and CNNfor118BusSystem.py are Keras approaches.
 
 cnn_kernal_wsy.py and cnn_main.py are Tensorflow approaches.
