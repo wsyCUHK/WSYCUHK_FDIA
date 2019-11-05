@@ -4,6 +4,20 @@ Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
 ![The structure of Deep Learning based Locational Detection architecture.](https://user-images.githubusercontent.com/37823466/68104232-46478880-ff15-11e9-9e39-759c1d568ada.png)
 
+### Network Design
+Convolutional networks are designed to process data that come in the form of multiple arrays. Many data modalities are in the form of multiple arrays: 1D for signals and sequences, including vectors of measurements; 2D for images or audio spectrograms; and 3D for video or volumetric
+images. The reason for the architecture of convolutional networks is twofold. First, in array data, local groups
+of values are often highly correlated, forming distinctive local motifs that are easily detectable. Second, the local
+statistics of images and other signals are invariant to location. In other words, if a motif can appear in one part of the
+arrays, it could appear anywhere. Hence, the units at different locations share the same weights through convolution
+operations and thus the convolutional layers could detect the same pattern in different parts of the array.
+In this paper, if an attack can appear in one part of the measurements, it could appear anywhere. Hence, we
+use convolutional layers to detect the same pattern in different parts of the measurements. Besides, the local groups
+of measurements are often highly correlated and the local statistics of attacks could be invariant to location. For
+example, the real and reactive power for each bus should be balanced. Therefore, the adjacent measurements are
+injected with high probability to keep the power balance in order to avoid detection. The inconsistency and cooccurrence dependency couple the measurements leaf by leaf. To decouple the inconsistency and dependency leaf by
+leaf, we use several layers of convolutional network layers in this paper.
+
 ## Requirements and Installation
 We recommended the following dependencies.
 
