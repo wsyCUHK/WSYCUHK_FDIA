@@ -1,4 +1,4 @@
-## Deep Learning based Locational Detection architecture
+## Deep Learning based Locational Detection architecture (DLLD)
 Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach, which is submitted to IEEE Internet of Things Journal.
 ## Introduction
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
@@ -41,6 +41,8 @@ Step 3: For each attack, we randomly select a set of target state variables to c
 Step 4: For each set of load and its particular target state variables, we generate stealthy FDIA according to the min-cut algorithm in [Bi & Zhang 2014] ( S. Bi and Y. J. Zhang, “Using covert topological information for defense against malicious attacks on DC state estimation,” IEEE J. on Selected Areas in Comm., vol. 32, no. 7, pp. 1471–1485, July 2014.).  
 Step 5: Due to the dynamic measurement noise, we also append random Gaussian noises to both compromised and uncompromised data.  
 
+After we generate the training data, we repeat above process for 10 times to generate 10 independent testing
+data, which naturally introduces validation variations. 
 
 ## About Authors
 Shuoyao Wang, yorksywang@tencent.com :Shuoyao Wang received the B.Eng. degree (with first class Hons.) and the Ph.D degree in information engineering from The Chinese University of Hong Kong, Hong Kong, in 2013 and 2018, respectively. Since 2018, he has been with the Department of Risk Management, CDG, Tencent, Shenzhen, China, where he is currently an Senior Researcher. His research interests include nature language processing, adversarial (reinforcement) learning, graph neural networks, optimization theory, dynamic programming, deep learning and reinforcement learning algorithm in both Smart Grid and WeChatPay Risk Management.
@@ -49,4 +51,4 @@ Suzhi Bi, bsz@szu.edu.cn
 
 Ying-jun Angela Zhang, yjzhang@ie.cuhk.edu.hk
 
-## Thank You for Reading!!!
+### Thank You for Reading!!!
