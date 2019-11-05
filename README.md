@@ -11,6 +11,7 @@ of values are often highly correlated, forming distinctive local motifs that are
 statistics of images and other signals are invariant to location. In other words, if a motif can appear in one part of the
 arrays, it could appear anywhere. Hence, the units at different locations share the same weights through convolution
 operations and thus the convolutional layers could detect the same pattern in different parts of the array.
+
 In this paper, if an attack can appear in one part of the measurements, it could appear anywhere. Hence, we
 use convolutional layers to detect the same pattern in different parts of the measurements. Besides, the local groups
 of measurements are often highly correlated and the local statistics of attacks could be invariant to location. For
