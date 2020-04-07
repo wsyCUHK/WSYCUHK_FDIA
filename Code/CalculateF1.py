@@ -5,12 +5,6 @@ Created on Fri Jun  8 17:33:36 2018
 @author: Wang Shuoyao
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun  8 11:37:50 2018
-
-@author: Wang Shuoyao
-"""
 
 def test2train(save_name):
     y_pred = sio.loadmat(save_name)['output_mode_pred']
