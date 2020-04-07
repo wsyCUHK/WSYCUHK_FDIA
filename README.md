@@ -1,5 +1,9 @@
 ## Deep Learning based Locational Detection architecture (DLLD)
-Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach, which is submitted to IEEE Internet of Things Journal.
+Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach, accepted by IEEE Internet of Things Journal.
+
+## Cite This Work
+S. Wang, S. Bi and Y. A. Zhang, "[Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach](https://ieeexplore.ieee.org/document/9049087)," in IEEE Internet of Things Journal.
+
 ## Introduction
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
 ![The structure of Deep Learning based Locational Detection architecture.](https://user-images.githubusercontent.com/37823466/68104232-46478880-ff15-11e9-9e39-759c1d568ada.png)
