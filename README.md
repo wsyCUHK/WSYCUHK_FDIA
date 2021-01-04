@@ -2,7 +2,7 @@
 Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach, accepted by IEEE Internet of Things Journal.
 
 ## Cite This Work
-S. Wang, S. Bi and Y. A. Zhang, "[Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach](https://ieeexplore.ieee.org/document/9049087)," in IEEE Internet of Things Journal.
+S. Wang, S. Bi and Y. A. Zhang, "[Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach](https://ieeexplore.ieee.org/document/9049087),"  in IEEE Internet of Things Journal, vol. 7, no. 9, pp. 8218-8227, Sept. 2020.
 
 ## Introduction
 This is the code and data for our paper "Locational Detection of False Data Injection Attack in Smart Grid: a Multi-label Classification Approach".
